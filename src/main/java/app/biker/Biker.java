@@ -1,11 +1,12 @@
 package app.biker;
 
-import app.details.Address;
 import app.enums.StatusCode;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Rafael Leal on 11/10/2018.
@@ -20,17 +21,23 @@ public class Biker {
 
     private String cpf;
 
-    @OneToOne
-    private Address address;
+    private String address;
+
+    private String phone;
 
     private String email;
 
     @Column(name = "CREATED_AT")
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
+
+    @Column(name = "UPDATED_AT")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_CD")
+    @ColumnDefault("'A'")
     private StatusCode statusCode;
 
     public Long getId() {
@@ -57,11 +64,11 @@ public class Biker {
         this.cpf = cpf;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -73,11 +80,11 @@ public class Biker {
         this.email = email;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -85,7 +92,23 @@ public class Biker {
         return statusCode;
     }
 
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     public void setStatusCode(StatusCode statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
