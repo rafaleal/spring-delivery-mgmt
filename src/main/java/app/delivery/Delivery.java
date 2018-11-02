@@ -5,10 +5,12 @@ import app.customer.Customer;
 import app.enums.DeliveryStatus;
 import app.enums.StatusCode;
 import app.payment.Payment;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Rafael Leal on 12/10/2018.
@@ -22,11 +24,16 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_DELIVERY")
+    @ColumnDefault("'REGISTERED'")
     private DeliveryStatus statusDelivery;
 
-    @Column(name = "REGISTERED_TIME")
+    @Column(name = "CREATED_AT")
     @CreationTimestamp
-    private Date registeredTime;
+    private LocalDateTime createdAt;
+
+    @Column(name = "UPDATED_AT")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ROUTE_ID", foreignKey = @ForeignKey(name = "ROUTE_ID_FK"))
@@ -42,6 +49,7 @@ public class Delivery {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_CD")
+    @ColumnDefault("'A'")
     private StatusCode statusCode;
 
     @OneToOne(
@@ -68,12 +76,20 @@ public class Delivery {
         this.statusDelivery = statusDelivery;
     }
 
-    public Date getRegisteredTime() {
-        return registeredTime;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setRegisteredTime(Date registeredTime) {
-        this.registeredTime = registeredTime;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Route getRoute() {

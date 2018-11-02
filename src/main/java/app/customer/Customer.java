@@ -5,10 +5,12 @@ import app.details.Email;
 import app.details.Phone;
 import app.enums.ContractType;
 import app.enums.StatusCode;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -39,10 +41,15 @@ public class Customer {
 
     @Column(name = "CREATED_AT")
     @CreationTimestamp
-    private Date createdAt;
+    private LocalDateTime createdAt;
+
+    @Column(name = "UPDATED_AT")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_CD")
+    @ColumnDefault("'A'")
     private StatusCode statusCode;
 
     public Long getId() {
@@ -85,12 +92,20 @@ public class Customer {
         this.contractType = contractType;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public StatusCode getStatusCode() {

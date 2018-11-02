@@ -16,8 +16,6 @@ public class Address {
 
     private String street;
 
-    private Integer number;
-
     private String additionalInfo;
 
     @Embedded
@@ -38,14 +36,6 @@ public class Address {
 
     public void setStreet(String street) {
         this.street = street;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
     }
 
     public String getAdditionalInfo() {
