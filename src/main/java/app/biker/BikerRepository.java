@@ -1,5 +1,6 @@
 package app.biker;
 
+import app.enums.StatusCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,19 @@ import java.util.List;
 @Repository
 public interface BikerRepository extends JpaRepository<Biker, Long> {
 
-    @Query("SELECT b FROM Biker b WHERE b.statusCode= :statCd")
-    List<Biker> findAllActive(@Param("statCd") String statCd);
+    List<Biker> findByStatusCode(StatusCode statusCode);
+
+    @Query("SELECT new app.biker.BikerSummaryDTO(" +
+            "b.id, " +
+            "b.fullName, " +
+            "COUNT(d)," +
+            "SUM(r.totalDistance)," +
+            "SUM(r.totalDue)" +
+            ")" +
+            " FROM Delivery AS d" +
+            " JOIN d.route r" +
+            " JOIN d.biker b" +
+            " WHERE b.id = :bikerId")
+    BikerSummaryDTO getBikerSummary(@Param("bikerId") Long bikerId);
+
 }
