@@ -19,36 +19,37 @@ import java.time.LocalDateTime;
 public class Delivery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "STAT_DELIVERY")
+    @Column(name = "STAT_DELIVERY", nullable = false)
     @ColumnDefault("'REGISTERED'")
     private DeliveryStatus statusDelivery;
 
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "UPDATED_AT")
+    @Column(name = "UPDATED_AT", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROUTE_ID", foreignKey = @ForeignKey(name = "ROUTE_ID_FK"))
+    @JoinColumn(name = "ROUTE_ID", foreignKey = @ForeignKey(name = "ROUTE_ID_FK"), nullable = false)
     private Route route;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", foreignKey = @ForeignKey(name = "CUSTOMER_ID_FK"))
+    @JoinColumn(name = "CUSTOMER_ID", foreignKey = @ForeignKey(name = "CUSTOMER_ID_FK"), nullable = false)
     private Customer customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BIKER_ID", foreignKey = @ForeignKey(name = "BIKER_ID_FK"))
+    @JoinColumn(name = "BIKER_ID", foreignKey = @ForeignKey(name = "BIKER_ID_FK"), nullable = false)
     private Biker biker;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "STAT_CD")
+    @Column(name = "STAT_CD", nullable = false)
     @ColumnDefault("'A'")
     private StatusCode statusCode;
 

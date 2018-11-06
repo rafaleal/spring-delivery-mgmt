@@ -14,29 +14,33 @@ import java.time.LocalDateTime;
 @Entity
 public class Biker {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String fullName;
 
+    @Column(unique = true, nullable = false)
     private String cpf;
 
     private String address;
 
+    @Column(unique = true, nullable = false)
     private String phone;
 
     private String email;
 
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name = "UPDATED_AT")
+    @Column(name = "UPDATED_AT", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "STAT_CD")
+    @Column(name = "STAT_CD", nullable = false)
     @ColumnDefault("'A'")
     private StatusCode statusCode;
 

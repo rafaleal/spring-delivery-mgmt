@@ -1,6 +1,7 @@
 package app.delivery;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -10,12 +11,15 @@ import java.util.List;
 public class Route {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    private Long totalDistance;
+    @Column(nullable = false)
+    private BigDecimal totalDistance;
 
-    private Long sumTotal;
+    @Column(nullable = false)
+    private BigDecimal totalDue;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Point> points;
@@ -28,20 +32,20 @@ public class Route {
         this.id = id;
     }
 
-    public Long getTotalDistance() {
+    public BigDecimal getTotalDistance() {
         return totalDistance;
     }
 
-    public void setTotalDistance(Long totalDistance) {
+    public void setTotalDistance(BigDecimal totalDistance) {
         this.totalDistance = totalDistance;
     }
 
-    public Long getSumTotal() {
-        return sumTotal;
+    public BigDecimal getSumTotal() {
+        return totalDue;
     }
 
-    public void setSumTotal(Long sumTotal) {
-        this.sumTotal = sumTotal;
+    public void setSumTotal(BigDecimal totalDue) {
+        this.totalDue = totalDue;
     }
 
     public List<Point> getPoints() {
