@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 public class Biker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @Column(nullable = false)
