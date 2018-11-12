@@ -1,5 +1,9 @@
 package app.biker;
 
+import app.biker.dto.BikerGetDTO;
+import app.biker.dto.BikerSummaryDTO;
+import app.enums.StatusCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,23 +13,34 @@ import java.util.List;
  */
 @Service
 public class BikerServiceImpl implements BikerService {
+
+    @Autowired
+    private BikerRepository bikerRepository;
+
     @Override
-    public List<BikerDTO> listAllBikers() {
+    public List<BikerGetDTO> listAllBikers() {
+        List<Biker> bikers = bikerRepository.findByStatusCode(StatusCode.A);
         return null;
     }
 
     @Override
-    public BikerDTO getBikerById(Long id) {
+    public List<BikerSummaryDTO> listAllBikersSummary() {
+        return this.bikerRepository.getAllActiveBikersSummary();
+    }
+
+    @Override
+    public BikerGetDTO getBikerById(Long id) {
         return null;
     }
 
     @Override
-    public void addBiker(BikerDTO biker) {
-
+    public Biker addBiker(Biker biker) {
+        biker.setStatusCode(StatusCode.A);
+        return bikerRepository.save(biker);
     }
 
     @Override
-    public BikerDTO updateBiker(Long id, BikerDTO details) {
+    public BikerGetDTO updateBiker(Long id, BikerGetDTO details) {
         return null;
     }
 
