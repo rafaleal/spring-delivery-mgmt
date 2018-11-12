@@ -1,6 +1,7 @@
 package app.biker;
 
 import app.enums.StatusCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -36,11 +37,13 @@ public class Biker {
 
     @Column(name = "UPDATED_AT", nullable = false)
     @UpdateTimestamp
+    @JsonIgnore
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_CD", nullable = false)
     @ColumnDefault("'A'")
+    @JsonIgnore
     private StatusCode statusCode;
 
     public Long getId() {
