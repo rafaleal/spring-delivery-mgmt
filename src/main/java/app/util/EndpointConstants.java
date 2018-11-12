@@ -4,9 +4,10 @@ package app.util;
  * Created by Rafael Leal on 22/10/2018.
  */
 public class EndpointConstants {
-    public static final String API_V1 = "/v1";
+    public static final String API_V1 = "/api/v1";
 
     //Biker endpoint
+    public static final String API_LIST_ALL_BIKERS_SUMMARY = "/bikers/summary";
     public static final String API_LIST_ALL_BIKERS = "/bikers";
     public static final String API_BIKER_ID = "/biker/{id}";
     public static final String API_NEW_BIKER = "/biker/new";
