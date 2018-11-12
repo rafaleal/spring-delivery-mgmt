@@ -1,9 +1,8 @@
 package app.biker;
 
-import app.biker.dto.BikerCreationDTO;
 import app.biker.dto.BikerGetDTO;
 import app.biker.dto.BikerSummaryDTO;
-import app.util.DTO;
+import app.biker.dto.BikerUpdateDTO;
 import app.util.EndpointConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -33,19 +32,22 @@ public class BikerController {
     @GetMapping(value = EndpointConstants.API_LIST_ALL_BIKERS, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<List<BikerGetDTO>> listAllBikers() {
 
-//        return new ResponseEntity<List<BikerDTO>>("GET Response", HttpStatus.OK);
-        return null;
+        return new ResponseEntity<>(this.bikerService.listAllBikers(), HttpStatus.OK);
     }
 
     @GetMapping(value = EndpointConstants.API_BIKER_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<BikerGetDTO> getBikerById(@PathVariable(value = "id") Long id) {
-        BikerGetDTO bikerGetDTO = bikerService.getBikerById(id);
-        return ResponseEntity.ok(bikerGetDTO);
+        BikerGetDTO biker = bikerService.getBikerById(id);
+        if(biker != null) {
+            return ResponseEntity.ok(biker);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping(value = EndpointConstants.API_NEW_BIKER, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody ResponseEntity addBiker(@RequestBody @DTO(BikerCreationDTO.class) Biker b) {
+    public @ResponseBody ResponseEntity addBiker(@RequestBody Biker b) {
         Biker biker = bikerService.addBiker(b);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -60,9 +62,9 @@ public class BikerController {
     }
 
     @PutMapping(value = EndpointConstants.API_BIKER_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<String> updateBiker(@PathVariable("id") Long bikerId, @RequestBody BikerGetDTO bikerGetDTO) {
+    public @ResponseBody ResponseEntity<BikerGetDTO> updateBiker(@PathVariable("id") Long bikerId, @RequestBody BikerUpdateDTO biker) {
 
-        return new ResponseEntity<String>("PUT Response", HttpStatus.OK);
+        return new ResponseEntity<>(this.bikerService.updateBiker(biker), HttpStatus.OK);
     }
 
     @GetMapping(value = EndpointConstants.API_LIST_ALL_BIKERS_SUMMARY, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -70,6 +72,10 @@ public class BikerController {
         return new ResponseEntity<>(this.bikerService.listAllBikersSummary(), HttpStatus.OK);
     }
 
-//    public @ResponseBody ResponseEntity deleteBiker
+    @DeleteMapping(value = EndpointConstants.API_BIKER_ID)
+    public ResponseEntity<BikerGetDTO> deleteBiker(@PathVariable Long id) {
+        this.bikerService.deleteBiker(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
