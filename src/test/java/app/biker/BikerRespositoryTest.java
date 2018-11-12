@@ -31,7 +31,7 @@ public class BikerRespositoryTest {
     public void testLoadingResultsInDatabase() {
         List<Biker> bikerList = this.bikerRepository.findAll();
         Assert.assertNotNull("there must be a response", bikerList);
-        Assert.assertTrue(bikerList.size() == 2);
+        Assert.assertTrue(bikerList.size() == 3);
     }
 
     @Test
@@ -44,14 +44,12 @@ public class BikerRespositoryTest {
     public void testGetBikerSummary() {
         List<BikerSummaryDTO> listBikerSummary = this.bikerRepository.getAllActiveBikersSummary();
         Assert.assertNotNull(listBikerSummary);
-        Assert.assertEquals(new Long(1), listBikerSummary.get(0).getId());
-        Assert.assertEquals("Rodrigo Batelli Bento", listBikerSummary.get(0).getName());
+        Assert.assertEquals("Rodrigo Batelli Bento", listBikerSummary.get(0).getFullName());
         Assert.assertEquals(new Long(1), listBikerSummary.get(0).getTotalDeliveries());
         Assert.assertEquals(new BigDecimal("4.32"), listBikerSummary.get(0).getTotalDistance());
         Assert.assertEquals(new BigDecimal("17.28"), listBikerSummary.get(0).getTotalDue());
 
-        Assert.assertEquals(new Long(2), listBikerSummary.get(1).getId());
-        Assert.assertEquals("Lincoln Schelske", listBikerSummary.get(1).getName());
+        Assert.assertEquals("Lincoln Schelske", listBikerSummary.get(1).getFullName());
         Assert.assertEquals(new Long(1), listBikerSummary.get(1).getTotalDeliveries());
         Assert.assertEquals(new BigDecimal("3.23"), listBikerSummary.get(1).getTotalDistance());
         Assert.assertEquals(new BigDecimal("12.92"), listBikerSummary.get(1).getTotalDue());

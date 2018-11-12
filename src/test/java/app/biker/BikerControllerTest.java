@@ -2,7 +2,6 @@ package app.biker;
 
 import app.biker.dto.BikerCreationDTO;
 import app.enums.StatusCode;
-import app.util.EndpointConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,13 +32,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static app.util.EndpointConstants.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @RunWith(SpringRunner.class)
@@ -80,16 +77,25 @@ public class BikerControllerTest {
     }
 
     @Test
+    public void testGettingAllActiveBikers() throws Exception {
+        this.mockMvc.perform(get(API_V1 + API_LIST_ALL_BIKERS))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(applicationJsonMediaType))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].fullName", is("Rodrigo Batelli Bento")))
+                .andExpect(jsonPath("$[1].fullName", is("Lincoln Schelske")))
+                .andExpect(jsonPath("$[2].fullName", is("Thiago Syen")));
+
+    }
+
+    @Test
     public void testGettingAllBikersSummary() throws Exception {
-        this.mockMvc.perform(get(EndpointConstants.API_V1 + EndpointConstants.API_LIST_ALL_BIKERS_SUMMARY))
+        this.mockMvc.perform(get(API_V1 + API_LIST_ALL_BIKERS_SUMMARY))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(applicationJsonMediaType))
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].name", is("Rodrigo Batelli Bento")))
-                .andExpect(jsonPath("$[0].address", is("Rua Guy de Maupassant, 131")))
-                .andExpect(jsonPath("$[0].cpf", is("123.456.789-00")))
-                .andExpect(jsonPath("$[0].phone", is("+5541997202120")))
-                .andExpect(jsonPath("$[1].name", is("Lincoln Schelske")));
+                .andExpect(jsonPath("$[0].fullName", is("Rodrigo Batelli Bento")))
+                .andExpect(jsonPath("$[1].fullName", is("Lincoln Schelske")));
     }
 
     @Test
@@ -98,7 +104,7 @@ public class BikerControllerTest {
         BikerCreationDTO dto = bikerCreationDTO();
         final AtomicLong newBikerId = new AtomicLong();
 
-        MvcResult mvcResult = this.mockMvc.perform(post(EndpointConstants.API_V1 + EndpointConstants.API_NEW_BIKER)
+        MvcResult mvcResult = this.mockMvc.perform(post(API_V1 + API_NEW_BIKER)
                 .content(objectMapper.writeValueAsBytes(dto))
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andDo(MockMvcResultHandlers.print())
@@ -133,6 +139,33 @@ public class BikerControllerTest {
 
     }
 
+    @Test
+    public void testDeleteBiker() throws Exception {
+        Long bikerId = 3L;
+        this.mockMvc.perform(delete(API_V1 + API_BIKER_ID,bikerId ))
+                .andExpect(status().isNoContent());
+
+        Optional<Biker> optionalBiker = bikerRepository.findById(bikerId);
+
+        optionalBiker.ifPresent(biker -> Assert.assertEquals(StatusCode.D, biker.getStatusCode()));
+
+    }
+
+    @Test
+    public void testUpdateBiker() throws Exception {
+        Biker biker = this.bikerUpdate();
+
+        mockMvc.perform(put(API_V1 + API_BIKER_ID, biker.getId())
+                .content(objectMapper.writeValueAsBytes(biker))
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk());
+
+        Optional<Biker> optionalBiker = bikerRepository.findById(biker.getId());
+
+        optionalBiker.ifPresent(updatedBiker -> Assert.assertEquals(biker.getPhone(), updatedBiker.getPhone()));
+    }
+
     private BikerCreationDTO bikerCreationDTO() {
         BikerCreationDTO dto = new BikerCreationDTO();
         dto.setFullName("Thiago Syen");
@@ -142,6 +175,18 @@ public class BikerControllerTest {
         dto.setPhone("+5541993625748");
 
         return dto;
+    }
+
+    private Biker bikerUpdate() {
+        Biker biker = new Biker();
+        biker.setId(3L);
+        biker.setFullName("Thiago Syen");
+        biker.setAddress("Rua Casemiro, 18");
+        biker.setCpf("666.666.666.-66");
+        biker.setEmail("syen@gmail.com");
+        biker.setPhone("+5541999999999");
+
+        return biker;
     }
 
 }
