@@ -16,3 +16,18 @@ INSERT INTO customer(id, customer_type, contract_type, stat_cd, cnpj, fantasy_na
 
 INSERT INTO delivery(id, stat_delivery, stat_cd, route_id, customer_id, biker_id, created_at, updated_at) VALUES (1, 'REGISTERED', 'A', 1, 1, 1, TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'));
 
+--
+
+INSERT INTO address(id, street, additional_info, latitude, longitude) VALUES (3, 'R. Mateus Leme, 131 - São Francisco, Curitiba - PR, 80510-190, Brasil', 'AP 13', -25.4265218, -49.271832500000016);
+INSERT INTO address(id, street, additional_info, latitude, longitude) VALUES (4, 'Praça Alfredo Andersen, 2031 - Bigorrilho, Curitiba - PR, 80730-160, Brasi', 'AP 41', -25.4350177, -49.29091790000001);
+
+INSERT INTO point(id, address_id) VALUES (3, 3);
+INSERT INTO point(id, address_id) VALUES (4, 4);
+
+INSERT INTO route(id, total_distance, total_due) VALUES (2, 3.23, 12.92);
+
+INSERT INTO route_points(route_id, points_id) VALUES (2, 3);
+INSERT INTO route_points(route_id, points_id) VALUES (2, 4);
+
+INSERT INTO delivery(id, stat_delivery, stat_cd, route_id, customer_id, biker_id, created_at, updated_at) VALUES (2, 'REGISTERED', 'A', 2, 1, 2, TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'));
+
