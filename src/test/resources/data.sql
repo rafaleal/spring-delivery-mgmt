@@ -31,3 +31,6 @@ INSERT INTO route_points(route_id, points_id) VALUES (2, 4);
 
 INSERT INTO delivery(id, stat_delivery, stat_cd, route_id, customer_id, biker_id, created_at, updated_at) VALUES (2, 'REGISTERED', 'A', 2, 1, 2, TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'));
 
+--
+
+INSERT INTO biker(full_name, cpf, address, phone, created_at, updated_at) VALUES ('Thiago Syen', '666.666.666-66', 'Rua Sao Salvador, 666', '+5541966666666', TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'));
