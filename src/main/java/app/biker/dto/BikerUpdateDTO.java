@@ -1,12 +1,11 @@
 package app.biker.dto;
 
-import java.io.Serializable;
+import app.enums.StatusCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDateTime;
 
-/**
- * Created by Rafael Leal on 22/10/2018.
- */
-public class BikerGetDTO implements Serializable {
+public class BikerUpdateDTO {
 
     private Long id;
 
@@ -21,6 +20,12 @@ public class BikerGetDTO implements Serializable {
     private String email;
 
     private LocalDateTime createdAt;
+
+    @JsonIgnore
+    private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @JsonIgnore
+    private StatusCode statusCode = StatusCode.A;
 
     public Long getId() {
         return id;
@@ -76,5 +81,21 @@ public class BikerGetDTO implements Serializable {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public StatusCode getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(StatusCode statusCode) {
+        this.statusCode = statusCode;
     }
 }
