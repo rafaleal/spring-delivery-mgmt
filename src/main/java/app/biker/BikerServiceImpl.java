@@ -2,11 +2,13 @@ package app.biker;
 
 import app.biker.dto.BikerGetDTO;
 import app.biker.dto.BikerSummaryDTO;
+import app.biker.dto.BikerUpdateDTO;
 import app.enums.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Rafael Leal on 20/10/2018.
@@ -17,10 +19,14 @@ public class BikerServiceImpl implements BikerService {
     @Autowired
     private BikerRepository bikerRepository;
 
+    @Autowired
+    private BikerMapper bikerMapper;
+
     @Override
     public List<BikerGetDTO> listAllBikers() {
         List<Biker> bikers = bikerRepository.findByStatusCode(StatusCode.A);
-        return null;
+        List<BikerGetDTO> bikersDTO = bikerMapper.bikersToBikerGetDTO(bikers);
+        return bikersDTO;
     }
 
     @Override
@@ -30,7 +36,9 @@ public class BikerServiceImpl implements BikerService {
 
     @Override
     public BikerGetDTO getBikerById(Long id) {
-        return null;
+        Optional<Biker> optBiker =  bikerRepository.findById(id);
+        return optBiker.map(biker -> this.bikerMapper.bikerToBikerGetDTO(biker)).orElse(null);
+
     }
 
     @Override
@@ -40,12 +48,15 @@ public class BikerServiceImpl implements BikerService {
     }
 
     @Override
-    public BikerGetDTO updateBiker(Long id, BikerGetDTO details) {
-        return null;
+    public BikerGetDTO updateBiker(BikerUpdateDTO bikerUpdateDTO) {
+        Biker biker = this.bikerMapper.bikerUpdateDTOToBiker(bikerUpdateDTO);
+        biker = this.bikerRepository.save(biker);
+
+        return this.bikerMapper.bikerToBikerGetDTO(biker);
     }
 
     @Override
-    public void deleteBikers(List<Long> ids) {
-
+    public void deleteBiker(Long id) {
+        this.bikerRepository.updateStatusCodeByBikerId(id, StatusCode.D);
     }
 }

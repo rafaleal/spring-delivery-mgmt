@@ -2,6 +2,7 @@ package app.biker;
 
 import app.biker.dto.BikerGetDTO;
 import app.biker.dto.BikerSummaryDTO;
+import app.biker.dto.BikerUpdateDTO;
 
 import java.util.List;
 
@@ -13,6 +14,6 @@ public interface BikerService {
     List<BikerSummaryDTO> listAllBikersSummary();
     BikerGetDTO getBikerById(Long id);
     Biker addBiker(Biker biker);
-    BikerGetDTO updateBiker(Long id, BikerGetDTO details);
-    void deleteBikers(List<Long> ids);
+    BikerGetDTO updateBiker(BikerUpdateDTO bikerUpdateDTO);
+    void deleteBiker(Long id);
 }
