@@ -36,6 +36,4 @@ public interface BikerRepository extends JpaRepository<Biker, Long> {
     @Modifying
     @Query("UPDATE Biker b SET b.statusCode = :statusCode WHERE b.id = :bikerId")
     void updateStatusCodeByBikerId(@Param("bikerId") Long bikerId, @Param("statusCode") StatusCode statusCode);
-
-
 }

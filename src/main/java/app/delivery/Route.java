@@ -21,7 +21,7 @@ public class Route {
     @Column(nullable = false)
     private BigDecimal totalDue;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Point> points;
 
     public Long getId() {

@@ -1,7 +1,6 @@
-package app.biker;
+package app.biker.dto;
 
-import app.biker.dto.BikerGetDTO;
-import app.biker.dto.BikerUpdateDTO;
+import app.biker.Biker;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

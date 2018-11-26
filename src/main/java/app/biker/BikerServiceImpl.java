@@ -1,6 +1,7 @@
 package app.biker;
 
 import app.biker.dto.BikerGetDTO;
+import app.biker.dto.BikerMapper;
 import app.biker.dto.BikerSummaryDTO;
 import app.biker.dto.BikerUpdateDTO;
 import app.enums.StatusCode;

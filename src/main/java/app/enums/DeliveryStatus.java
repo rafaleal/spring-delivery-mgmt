@@ -6,7 +6,8 @@ package app.enums;
 public enum DeliveryStatus {
     REGISTERED("REGISTERED"),
     ONGOING("ONGOING"),
-    COMPLETED("COMPLETED")
+    COMPLETED("COMPLETED"),
+    CANCELED("CANCELED")
     ;
 
     private final String text;

@@ -1,4 +1,6 @@
-package app.customer;
+package app.customer.natural_customer;
+
+import app.customer.Customer;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -8,19 +10,9 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("NATURAL")
-public class NaturalCustomer extends Customer{
-
-    private String fullName;
+public class NaturalCustomer extends Customer {
 
     private String cpf;
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
 
     public String getCpf() {
         return cpf;

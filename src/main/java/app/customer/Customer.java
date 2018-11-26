@@ -1,17 +1,16 @@
 package app.customer;
 
 import app.details.Address;
-import app.details.Email;
-import app.details.Phone;
 import app.enums.ContractType;
 import app.enums.StatusCode;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * Created by Rafael Leal on 12/10/2018.
@@ -20,37 +19,43 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "CUSTOMER_TYPE",
     discriminatorType = DiscriminatorType.STRING)
-public class Customer {
+public abstract class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    private String name;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Phone> phones;
+    private String phone;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Email> emails;
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "CONTRACT_TYPE")
     private ContractType contractType;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "CREATED_AT")
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Column(name = "UPDATED_AT")
     @UpdateTimestamp
+    @JsonIgnore
     private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_CD")
     @ColumnDefault("'A'")
+    @JsonIgnore
     private StatusCode statusCode;
+
+    @Column(name = "CUSTOMER_TYPE", insertable = false, updatable = false)
+    private String customerType;
 
     public Long getId() {
         return id;
@@ -58,6 +63,14 @@ public class Customer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Address getAddress() {
@@ -68,20 +81,20 @@ public class Customer {
         this.address = address;
     }
 
-    public List<Phone> getPhones() {
-        return phones;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhones(List<Phone> phones) {
-        this.phones = phones;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public List<Email> getEmails() {
-        return emails;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmails(List<Email> emails) {
-        this.emails = emails;
+    public void setEmail(String emails) {
+        this.email = email;
     }
 
     public ContractType getContractType() {
@@ -114,5 +127,9 @@ public class Customer {
 
     public void setStatusCode(StatusCode statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public String getCustomerType() {
+        return customerType;
     }
 }

@@ -1,4 +1,6 @@
-package app.customer;
+package app.customer.legal_customer;
+
+import app.customer.Customer;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -8,11 +10,9 @@ import javax.persistence.Entity;
  */
 @Entity
 @DiscriminatorValue("LEGAL")
-public class LegalCustomer extends Customer{
+public class LegalCustomer extends Customer {
 
     private String socialReason;
-
-    private String fantasyName;
 
     private String cnpj;
 
@@ -22,14 +22,6 @@ public class LegalCustomer extends Customer{
 
     public void setSocialReason(String socialReason) {
         this.socialReason = socialReason;
-    }
-
-    public String getFantasyName() {
-        return fantasyName;
-    }
-
-    public void setFantasyName(String fantasyName) {
-        this.fantasyName = fantasyName;
     }
 
     public String getCnpj() {

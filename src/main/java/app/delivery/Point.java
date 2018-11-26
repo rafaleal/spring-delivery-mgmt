@@ -3,7 +3,7 @@ package app.delivery;
 import app.details.Address;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalTime;
 
 /**
  * Created by Rafael Leal on 12/10/2018.
@@ -18,11 +18,12 @@ public class Point {
 
     private Long waitingTime;
 
-    @Temporal(TemporalType.DATE)
-    private Date arrivalTime;
+    private LocalTime scheduledArrivalTime;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
+
+    private String personResponsible;
 
     public Long getId() {
         return id;
@@ -40,12 +41,12 @@ public class Point {
         this.waitingTime = waitingTime;
     }
 
-    public Date getArrivalTime() {
-        return arrivalTime;
+    public LocalTime getArrivalTime() {
+        return scheduledArrivalTime;
     }
 
-    public void setArrivalTime(Date arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setArrivalTime(LocalTime scheduledArrivalTime) {
+        this.scheduledArrivalTime = scheduledArrivalTime;
     }
 
     public Address getAddress() {
@@ -54,5 +55,13 @@ public class Point {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getPersonResponsible() {
+        return personResponsible;
+    }
+
+    public void setPersonResponsible(String personResponsible) {
+        this.personResponsible = personResponsible;
     }
 }

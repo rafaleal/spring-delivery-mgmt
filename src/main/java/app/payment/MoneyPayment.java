@@ -13,7 +13,7 @@ public class MoneyPayment extends Payment{
 
     private BigDecimal coinChange;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "POINT_ID", foreignKey = @ForeignKey(name = "POINT_ID_FK"))
     private Point paymentPoint;
 

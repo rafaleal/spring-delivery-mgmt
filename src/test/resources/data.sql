@@ -34,3 +34,5 @@ INSERT INTO delivery(id, stat_delivery, stat_cd, route_id, customer_id, biker_id
 --
 
 INSERT INTO biker(full_name, cpf, address, phone, created_at, updated_at) VALUES ('Thiago Syen', '666.666.666-66', 'Rua Sao Salvador, 666', '+5541966666666', TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'));
+
+INSERT INTO customer(customer_type, contract_type, stat_cd, cpf, full_name, created_at, updated_at) VALUES ('NATURAL', 'SPONTANEOUS', 'A', '123.456.789-00', 'Sydney Magal', TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'), TO_DATE('22-12-2018 10:18:02', 'DD-MM-YYYY HH24:MI:SS'));

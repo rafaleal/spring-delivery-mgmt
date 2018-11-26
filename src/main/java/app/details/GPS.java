@@ -8,25 +8,25 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class GPS implements Coordinates {
 
-    private double latitude;
+    private Double latitude;
 
-    private double longitude;
+    private Double longitude;
 
     private GPS() {
     }
 
-    public GPS(double latitude, double longitude) {
+    public GPS(Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     @Override
-    public double x() {
+    public Double x() {
         return latitude;
     }
 
     @Override
-    public double y() {
+    public Double y() {
         return longitude;
     }
 }

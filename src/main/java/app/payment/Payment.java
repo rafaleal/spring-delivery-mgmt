@@ -1,6 +1,5 @@
 package app.payment;
 
-import app.delivery.Delivery;
 import app.enums.PaymentStatus;
 import app.enums.PaymentType;
 
@@ -27,15 +26,11 @@ public class Payment {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "PAYMENT_TYPE")
-    private PaymentType type;
+    private PaymentType paymentType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "PAYMENT_STAT")
     private PaymentStatus status;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DELIVERY_ID")
-    private Delivery delivery;
 
     public Long getId() {
         return id;
@@ -69,19 +64,11 @@ public class Payment {
         this.status = status;
     }
 
-    public Delivery getDelivery() {
-        return delivery;
-    }
-
-    public void setDelivery(Delivery delivery) {
-        this.delivery = delivery;
-    }
-
     public PaymentType getType() {
-        return type;
+        return paymentType;
     }
 
-    public void setType(PaymentType type) {
-        this.type = type;
+    public void setType(PaymentType paymentType) {
+        this.paymentType = paymentType;
     }
 }
