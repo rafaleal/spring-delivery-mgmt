@@ -22,4 +22,15 @@ public class NaturalCustomerServiceImpl implements NaturalCustomerService {
         customer.setStatusCode(StatusCode.A);
         return this.naturalCustomerRepository.save(customer);
     }
+
+    @Override
+    public void deleteNaturalCustomer(Long id) {
+        this.naturalCustomerRepository.updateStatusCodeByNaturalCustomerId(id, StatusCode.D);
+    }
+
+    @Override
+    public NaturalCustomer updateNaturalCustomer(NaturalCustomer naturalCustomer) {
+        naturalCustomer.setStatusCode(StatusCode.A);
+        return this.naturalCustomerRepository.save(naturalCustomer);
+    }
 }

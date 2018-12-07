@@ -34,7 +34,7 @@ public class LegalCustomerController {
         LegalCustomer legalCustomer = legalCustomerService.addLegalCustomer(customer);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/legal-customer/{id}")
+            .path(API_LEGAL_CUSTOMER_ID)
             .buildAndExpand(legalCustomer.getId())
             .toUri();
 
@@ -42,5 +42,16 @@ public class LegalCustomerController {
         httpHeaders.setLocation(uriOfNewResource);
 
         return new ResponseEntity<>(legalCustomer, httpHeaders, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = API_LEGAL_CUSTOMER_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<LegalCustomer> updateLegalCustomer(@PathVariable("id") Long id, @RequestBody LegalCustomer legalCustomer) {
+        return new ResponseEntity<>(this.legalCustomerService.updateLegalCustomer(legalCustomer), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = API_LEGAL_CUSTOMER_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LegalCustomer> deleteLegalCustomer(@PathVariable Long id) {
+        this.legalCustomerService.deleteLegalCustomer(id);
+        return ResponseEntity.noContent().build();
     }
 }

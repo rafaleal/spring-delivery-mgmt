@@ -1,5 +1,6 @@
 package app.customer.natural_customer;
 
+import app.util.EndpointConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class NaturalCustomerController {
         NaturalCustomer naturalCustomer = naturalCustomerService.addNaturalCustomer(customer);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/natural-customer/{id}")
+                .path(API_NATURAL_CUSTOMER_ID)
                 .buildAndExpand(naturalCustomer.getId())
                 .toUri();
 
@@ -42,5 +43,16 @@ public class NaturalCustomerController {
         httpHeaders.setLocation(uriOfNewResource);
 
         return new ResponseEntity<>(naturalCustomer, httpHeaders, HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = EndpointConstants.API_NATURAL_CUSTOMER_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<NaturalCustomer> updateNaturalCustomer(@PathVariable("id") Long naturalCustomerId, @RequestBody NaturalCustomer naturalCustomer) {
+        return new ResponseEntity<>(this.naturalCustomerService.updateNaturalCustomer(naturalCustomer), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = EndpointConstants.API_NATURAL_CUSTOMER_ID, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<NaturalCustomer> deleteNaturalCustomer(@PathVariable("id") Long naturalCustomerId) {
+        this.naturalCustomerService.deleteNaturalCustomer(naturalCustomerId);
+        return ResponseEntity.noContent().build();
     }
 }

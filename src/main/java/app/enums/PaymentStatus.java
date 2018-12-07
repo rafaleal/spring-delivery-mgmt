@@ -5,7 +5,7 @@ package app.enums;
  */
 public enum PaymentStatus {
     PENDING("PENDING"),
-    PAYED("PAYED")
+    PAID("PAID")
     ;
 
     private final String text;

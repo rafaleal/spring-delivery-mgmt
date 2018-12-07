@@ -64,11 +64,11 @@ public class Payment {
         this.status = status;
     }
 
-    public PaymentType getType() {
+    public PaymentType getPaymentType() {
         return paymentType;
     }
 
-    public void setType(PaymentType paymentType) {
+    public void setPaymentType(PaymentType paymentType) {
         this.paymentType = paymentType;
     }
 }

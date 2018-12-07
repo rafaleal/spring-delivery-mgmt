@@ -1,7 +1,5 @@
 package app.details;
 
-import org.hibernate.annotations.Target;
-
 import javax.persistence.*;
 
 /**
@@ -19,9 +17,9 @@ public class Address {
 
     private String additionalInfo;
 
-    @Embedded
-    @Target( GPS.class )
-    private Coordinates coordinates;
+    private Double lat;
+
+    private Double lng;
 
     public Long getId() {
         return id;
@@ -47,12 +45,20 @@ public class Address {
         this.additionalInfo = additionalInfo;
     }
 
-    public Coordinates getCoordinates() {
-        return coordinates;
+    public Double getLat() {
+        return lat;
     }
 
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 }
 

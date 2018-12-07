@@ -1,8 +1,9 @@
 package app.biker;
 
 import app.enums.StatusCode;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import app.util.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -32,7 +33,7 @@ public class Biker {
 
     private String email;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(name = "CREATED_AT", nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;

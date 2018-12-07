@@ -41,11 +41,11 @@ public class Point {
         this.waitingTime = waitingTime;
     }
 
-    public LocalTime getArrivalTime() {
+    public LocalTime getScheduledArrivalTime() {
         return scheduledArrivalTime;
     }
 
-    public void setArrivalTime(LocalTime scheduledArrivalTime) {
+    public void setScheduledArrivalTime(LocalTime scheduledArrivalTime) {
         this.scheduledArrivalTime = scheduledArrivalTime;
     }
 

@@ -6,4 +6,8 @@ public interface NaturalCustomerService {
     List<NaturalCustomer> listAllNaturalCustomres();
 
     NaturalCustomer addNaturalCustomer(NaturalCustomer customer);
+
+    void deleteNaturalCustomer(Long id);
+
+    NaturalCustomer updateNaturalCustomer(NaturalCustomer naturalCustomer);
 }

@@ -23,4 +23,15 @@ public class LegalCustomerServiceImpl implements LegalCustomerService {
         customer.setStatusCode(StatusCode.A);
         return this.legalCustomerRepository.save(customer);
     }
+
+    @Override
+    public LegalCustomer updateLegalCustomer(LegalCustomer customer) {
+        customer.setStatusCode(StatusCode.A);
+        return this.legalCustomerRepository.save(customer);
+    }
+
+    @Override
+    public void deleteLegalCustomer(Long id) {
+        this.legalCustomerRepository.updateStatusCodeByLegalCustomerId(id, StatusCode.D);
+    }
 }

@@ -5,8 +5,9 @@ import app.customer.Customer;
 import app.enums.DeliveryStatus;
 import app.enums.StatusCode;
 import app.payment.Payment;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import app.util.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -38,8 +39,10 @@ public class Delivery {
 
     private LocalTime handoverTime;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "CREATED_AT", nullable = false)
+    private Double finalAmount;
+
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @Column(name = "CREATED_AT", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -48,7 +51,7 @@ public class Delivery {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ROUTE_ID", foreignKey = @ForeignKey(name = "ROUTE_ID_FK"), nullable = false)
     private Route route;
 
@@ -60,14 +63,15 @@ public class Delivery {
     @JoinColumn(name = "BIKER_ID", foreignKey = @ForeignKey(name = "BIKER_ID_FK"), nullable = false)
     private Biker biker;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Payment payment;
+
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "STAT_CD", nullable = false)
     @ColumnDefault("'A'")
     private StatusCode statusCode;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Payment payment;
 
     public Long getId() {
         return id;
@@ -107,6 +111,14 @@ public class Delivery {
 
     public void setHandoverTime(LocalTime handoverTime) {
         this.handoverTime = handoverTime;
+    }
+
+    public Double getFinalAmount() {
+        return finalAmount;
+    }
+
+    public void setFinalAmount(Double finalAmount) {
+        this.finalAmount = finalAmount;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -164,4 +176,5 @@ public class Delivery {
     public void setPayment(Payment payment) {
         this.payment = payment;
     }
+
 }

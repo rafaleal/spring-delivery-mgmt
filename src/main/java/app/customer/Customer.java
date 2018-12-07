@@ -1,10 +1,13 @@
 package app.customer;
 
+import app.customer.legal_customer.LegalCustomer;
+import app.customer.natural_customer.NaturalCustomer;
 import app.details.Address;
 import app.enums.ContractType;
 import app.enums.StatusCode;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,6 +22,14 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "CUSTOMER_TYPE",
     discriminatorType = DiscriminatorType.STRING)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "customerType"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = LegalCustomer.class, name = "LEGAL"),
+        @JsonSubTypes.Type(value = NaturalCustomer.class, name = "NATURAL")
+})
 public abstract class Customer {
 
     @Id
@@ -38,8 +49,7 @@ public abstract class Customer {
     @Column(name = "CONTRACT_TYPE")
     private ContractType contractType;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
@@ -93,7 +103,7 @@ public abstract class Customer {
         return email;
     }
 
-    public void setEmail(String emails) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -132,4 +142,6 @@ public abstract class Customer {
     public String getCustomerType() {
         return customerType;
     }
+
+
 }

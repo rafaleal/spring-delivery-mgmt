@@ -21,7 +21,7 @@ public class Route {
     @Column(nullable = false)
     private BigDecimal totalDue;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Point> points;
 
     public Long getId() {
@@ -40,14 +40,6 @@ public class Route {
         this.totalDistance = totalDistance;
     }
 
-    public BigDecimal getSumTotal() {
-        return totalDue;
-    }
-
-    public void setSumTotal(BigDecimal totalDue) {
-        this.totalDue = totalDue;
-    }
-
     public List<Point> getPoints() {
         return points;
     }
@@ -55,4 +47,8 @@ public class Route {
     public void setPoints(List<Point> points) {
         this.points = points;
     }
+
+    public BigDecimal getTotalDue() { return totalDue; }
+
+    public void setTotalDue(BigDecimal totalDue) { this.totalDue = totalDue; }
 }

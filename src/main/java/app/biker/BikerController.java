@@ -15,6 +15,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+import static app.util.EndpointConstants.API_BIKER_ID;
+import static app.util.EndpointConstants.API_LIST_ALL_BIKERS;
+import static app.util.EndpointConstants.API_NEW_BIKER;
+
 /**
  * Created by Rafael Leal on 20/10/2018.
  */
@@ -29,13 +33,13 @@ public class BikerController {
         this.bikerService = bikerService;
     }
 
-    @GetMapping(value = EndpointConstants.API_LIST_ALL_BIKERS, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = API_LIST_ALL_BIKERS, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<List<BikerGetDTO>> listAllBikers() {
 
         return new ResponseEntity<>(this.bikerService.listAllBikers(), HttpStatus.OK);
     }
 
-    @GetMapping(value = EndpointConstants.API_BIKER_ID, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = API_BIKER_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<BikerGetDTO> getBikerById(@PathVariable(value = "id") Long id) {
         BikerGetDTO biker = bikerService.getBikerById(id);
         if(biker != null) {
@@ -45,13 +49,13 @@ public class BikerController {
         }
     }
 
-    @PostMapping(value = EndpointConstants.API_NEW_BIKER, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = API_NEW_BIKER, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public @ResponseBody ResponseEntity addBiker(@RequestBody Biker b) {
         Biker biker = bikerService.addBiker(b);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/biker/{id}")
+                .path(API_BIKER_ID)
                 .buildAndExpand(biker.getId())
                 .toUri();
 

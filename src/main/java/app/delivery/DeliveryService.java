@@ -1,10 +1,13 @@
 package app.delivery;
 
-import app.delivery.dto.DeliveryGetDTO;
-
 import java.util.List;
 
 public interface DeliveryService {
-    List<DeliveryGetDTO> listAllActiveDeliveries();
-    DeliveryGetDTO getDeliveryById(Long id) throws Exception;
+    List<Delivery> listAllActiveDeliveries();
+    Delivery getDeliveryById(Long id) throws Exception;
+    Delivery addDelivery(Delivery delivery);
+
+    Delivery updateDelivery(Delivery delivery);
+
+    void cancelDelivery(Long id);
 }

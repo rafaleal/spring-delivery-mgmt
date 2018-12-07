@@ -7,4 +7,8 @@ public interface LegalCustomerService {
     List<LegalCustomer> listAllLegalCustomers();
 
     LegalCustomer addLegalCustomer(LegalCustomer customer);
+
+    LegalCustomer updateLegalCustomer(LegalCustomer customer);
+
+    void deleteLegalCustomer(Long id);
 }
